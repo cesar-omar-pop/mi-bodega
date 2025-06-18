@@ -1,0 +1,374 @@
+/* grid2.css - Diseño basado en image_f6a8f5.png, image_f6b0f2.png, image_f6b7f6.png, image_f720d9.png, image_f72954.png */
+
+/* Contenedor principal de los dos bloques */
+#warehouse-map2 {
+    display: flex; /* Usamos flexbox para alinear los dos bloques horizontalmente */
+    flex-wrap: wrap; /* Permitir que los elementos se envuelvan a la siguiente línea si no caben */
+    gap: 30px; /* Espacio entre los dos bloques principales (horizontales y verticales) */
+    background-color: lightgray; /* Color de fondo del área total */
+    padding: 20px;
+    border-radius: 8px;
+    margin: 10px auto;
+    width: fit-content; /* Ajusta el ancho al contenido */
+    height: fit-content; /* Ajusta la altura al contenido */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    justify-content: center; /* Centra los bloques horizontalmente */
+    align-items: flex-start; /* Alinea los ítems al inicio del eje cruzado (arriba) */
+}
+
+/* Estilos comunes para los dos bloques principales */
+.outer-block-border {
+    border: 2px solid black;
+    background-color: white; /* Fondo blanco para los bloques internos */
+    display: grid; /* Cada bloque interno es un grid */
+    gap: 0; /* Sin espacio entre las celdas internas y pasillos */
+    padding: 0; /* Eliminado el padding para que no haya "sobrantes" */
+    box-sizing: border-box; /* Asegura que padding y borde se incluyan en el tamaño del contenedor */
+}
+
+/* --- Definición del Grid para el Primer Bloque (Izquierdo) --- */
+#block1 {
+    /* Basado en image_f6a8f5.png y image_f6b0f2.png */
+    /* Celdas y pasillos en la primera fila: 1 - PASILLO - 2 - 3 - PASILLO - 4 - 5 - PASILLO - 6 - 7 - PASILLO (final) */
+    /* Celdas y pasillos en la segunda fila: 14 - PASILLO - 15 - 16 - PASILLO - 17 - 18 - PASILLO - 19 - 20 - PASILLO (final) */
+    /* Ancho de celda: 110px, Ancho de pasillo: 40px */
+    grid-template-columns: 110px 40px repeat(2, 110px) 40px repeat(2, 110px) 40px repeat(2, 110px) 40px;
+    grid-template-rows: repeat(2, 80px) 40px; /* Dos filas de celdas + una fila para el pasillo horizontal */
+}
+
+/* Posicionamiento de las celdas en el Primer Bloque */
+#block1 > .grid-cell[data-id="1"] { grid-column: 1; grid-row: 1; }
+#block1 > .vertical-aisle:nth-of-type(1) { grid-column: 2; grid-row: 1 / span 2; } /* Pasillo entre 1 y 2 */
+#block1 > .grid-cell[data-id="2"] { grid-column: 3; grid-row: 1; }
+#block1 > .grid-cell[data-id="3"] { grid-column: 4; grid-row: 1; }
+#block1 > .vertical-aisle:nth-of-type(2) { grid-column: 5; grid-row: 1 / span 2; } /* Pasillo entre 3 y 4 */
+#block1 > .grid-cell[data-id="4"] { grid-column: 6; grid-row: 1; }
+#block1 > .grid-cell[data-id="5"] { grid-column: 7; grid-row: 1; }
+#block1 > .vertical-aisle:nth-of-type(3) { grid-column: 8; grid-row: 1 / span 2; } /* Pasillo entre 5 y 6 */
+#block1 > .grid-cell[data-id="6"] { grid-column: 9; grid-row: 1; }
+#block1 > .grid-cell[data-id="7"] { grid-column: 10; grid-row: 1; }
+
+#block1 > .grid-cell[data-id="14"] { grid-column: 1; grid-row: 2; }
+/* .vertical-aisle:nth-of-type(1) cubre ambas filas */
+#block1 > .grid-cell[data-id="15"] { grid-column: 3; grid-row: 2; }
+#block1 > .grid-cell[data-id="16"] { grid-column: 4; grid-row: 2; }
+/* .vertical-aisle:nth-of-type(2) cubre ambas filas */
+#block1 > .grid-cell[data-id="17"] { grid-column: 6; grid-row: 2; }
+#block1 > .grid-cell[data-id="18"] { grid-column: 7; grid-row: 2; }
+/* .vertical-aisle:nth-of-type(3) cubre ambas filas */
+#block1 > .grid-cell[data-id="19"] { grid-column: 9; grid-row: 2; }
+#block1 > .grid-cell[data-id="20"] { grid-column: 10; grid-row: 2; }
+
+/* Pasillo horizontal al final del bloque 1 */
+#block1 > .horizontal-aisle-bottom {
+    grid-column: 1 / span 11; /* Se extiende por todas las columnas del bloque */
+    grid-row: 3; /* En la tercera fila (la inferior) */
+}
+
+
+/* --- Definición del Grid para el Segundo Bloque (Derecho) --- */
+#block2 {
+    /* Basado en image_f6a8f5.png y image_f6b0f2.png: No hay pasillo inicial. 8 - 9 - 10 - 11 - 12 - PASILLO - 13 */
+    /* Celdas y pasillos en la primera fila: 8 - 9 - 10 - 11 - 12 - PASILLO - 13 */
+    /* Celdas y pasillos en la segunda fila: 21 - 22 - 23 - 24 - 25 - PASILLO - 26 */
+    /* Ancho de celda: 110px, Ancho de pasillo: 40px */
+    grid-template-columns: repeat(5, 110px) 40px 80px; /* No hay pasillo al inicio */
+    grid-template-rows: repeat(2, 80px) 40px; /* Dos filas de celdas + una fila para el pasillo horizontal */
+}
+
+/* Posicionamiento de las celdas en el Segundo Bloque */
+/* Se eliminó el pasillo inicial según tu instrucción y las nuevas imágenes */
+#block2 > .grid-cell[data-id="8"] { grid-column: 1; grid-row: 1; }
+#block2 > .grid-cell[data-id="9"] { grid-column: 2; grid-row: 1; }
+#block2 > .grid-cell[data-id="10"] { grid-column: 3; grid-row: 1; }
+#block2 > .grid-cell[data-id="11"] { grid-column: 4; grid-row: 1; }
+#block2 > .grid-cell[data-id="12"] { grid-column: 5; grid-row: 1; }
+#block2 > .vertical-aisle:nth-of-type(4) { grid-column: 6; grid-row: 1 / span 2; } /* Pasillo entre 12 y 13 / 25 y 26 */
+#block2 > .grid-cell[data-id="13"] { grid-column: 7; grid-row: 1; }
+
+#block2 > .grid-cell[data-id="21"] { grid-column: 1; grid-row: 2; }
+#block2 > .grid-cell[data-id="22"] { grid-column: 2; grid-row: 2; }
+#block2 > .grid-cell[data-id="23"] { grid-column: 3; grid-row: 2; }
+#block2 > .grid-cell[data-id="24"] { grid-column: 4; grid-row: 2; }
+#block2 > .grid-cell[data-id="25"] { grid-column: 5; grid-row: 2; }
+/* .vertical-aisle:nth-of-type(4) cubre ambas filas */
+#block2 > .grid-cell[data-id="26"] { grid-column: 7; grid-row: 2; }
+
+/* Pasillo horizontal al final del bloque 2 (sin texto, solo para rellenar el espacio) */
+#block2 > .horizontal-aisle-bottom {
+    grid-column: 1 / span 7; /* Se extiende por todas las columnas del bloque */
+    grid-row: 3; /* En la tercera fila (la inferior) */
+}
+
+/* --- Definición del Grid para los nuevos Bloques (T1-T8 y T9-T14) --- */
+
+/* Estilo para el contenedor de T1 a T8 */
+#blockT1-T8 {
+    grid-template-columns: repeat(8, 110px); /* 8 celdas de 110px cada una */
+    grid-template-rows: 40px 80px 40px; /* Pasillo superior, una fila de celdas, Pasillo inferior */
+    margin-top: 0px; /* Espacio entre los bloques superiores y este nuevo bloque */
+}
+
+/* Posicionamiento de las celdas en el bloque T1-T8 */
+#blockT1-T8 > .horizontal-aisle-top {
+    grid-column: 1 / span 8; /* Se extiende por todas las columnas de las celdas */
+    grid-row: 1; /* En la primera fila (superior) */
+}
+
+#blockT1-T8 > .grid-cell[data-id^="T"] {
+    grid-row: 2; /* Las celdas ocuparán la segunda fila del grid */
+}
+
+/* Posicionamiento individual de las celdas T1 a T8 */
+#blockT1-T8 > .grid-cell[data-id="T1"] { grid-column: 1; }
+#blockT1-T8 > .grid-cell[data-id="T2"] { grid-column: 2; }
+#blockT1-T8 > .grid-cell[data-id="T3"] { grid-column: 3; }
+#blockT1-T8 > .grid-cell[data-id="T4"] { grid-column: 4; }
+#blockT1-T8 > .grid-cell[data-id="T5"] { grid-column: 5; }
+#blockT1-T8 > .grid-cell[data-id="T6"] { grid-column: 6; }
+#blockT1-T8 > .grid-cell[data-id="T7"] { grid-column: 7; }
+#blockT1-T8 > .grid-cell[data-id="T8"] { grid-column: 8; }
+
+/* Pasillo horizontal al final del bloque T1-T8 */
+#blockT1-T8 > .horizontal-aisle-bottom {
+    grid-column: 1 / span 8; /* Se extiende por todas las columnas del bloque */
+    grid-row: 3; /* En la tercera fila (la inferior) */
+}
+
+/* Estilo para el contenedor de T9 a T14 */
+#blockT9-T14 {
+    grid-template-columns: repeat(6, 110px); /* 6 celdas de 110px cada una */
+    grid-template-rows: 40px 80px 40px; /* Pasillo superior, una fila de celdas, Pasillo inferior */
+    margin-top: 0px; /* Espacio entre los bloques superiores y este nuevo bloque */
+    margin-left: 20px; /* Espacio entre blockT1-T8 y blockT9-T14 */
+}
+
+/* Posicionamiento de las celdas en el bloque T9-T14 */
+#blockT9-T14 > .horizontal-aisle-top {
+    grid-column: 1 / span 6; /* Se extiende por todas las columnas de las celdas */
+    grid-row: 1; /* En la primera fila (superior) */
+}
+
+#blockT9-T14 > .grid-cell[data-id^="T"] {
+    grid-row: 2; /* Las celdas ocuparán la segunda fila del grid */
+}
+
+/* Posicionamiento individual de las celdas T9 a T14 */
+#blockT9-T14 > .grid-cell[data-id="T9"] { grid-column: 1; }
+#blockT9-T14 > .grid-cell[data-id="T10"] { grid-column: 2; }
+#blockT9-T14 > .grid-cell[data-id="T11"] { grid-column: 3; }
+#blockT9-T14 > .grid-cell[data-id="T12"] { grid-column: 4; }
+#blockT9-T14 > .grid-cell[data-id="T13"] { grid-column: 5; }
+#blockT9-T14 > .grid-cell[data-id="T14"] { grid-column: 6; }
+
+/* Pasillo horizontal al final del bloque T9-T14 */
+#blockT9-T14 > .horizontal-aisle-bottom {
+    grid-column: 1 / span 6; /* Se extiende por todas las columnas del bloque */
+    grid-row: 3; /* En la tercera fila (la inferior) */
+}
+
+/* --- Estilos para los Nuevos Bloques Grandes --- */
+
+/* Estilos comunes para los bloques grandes (blockLargeLeft, blockLargeRight) */
+.outer-block-border.large-block {
+    margin-top: 30px; /* Espacio entre los bloques T y estos nuevos bloques */
+    /* Ancho de celda: 110px, Altura de celda: 80px */
+}
+
+/* Estilo para la línea roja separadora */
+.red-line-separator {
+    background-color: red;
+    height: 3px; /* Grosor de la línea roja */
+    margin: 0; /* Asegura que no haya márgenes que afecten el diseño */
+    padding: 0; /* Asegura que no haya padding */
+    grid-column: 1 / span 8; /* Se extenderá por todas las columnas de las celdas */
+    grid-row: 3; /* Estará en la tercera fila de la cuadrícula de cada bloque */
+    box-sizing: border-box; /* Incluye borde y padding en el tamaño */
+}
+
+/* Estilo para las etiquetas de sección (SECCION5, SECCION6, etc.) */
+.section-label {
+    background-color: transparent; /* Fondo transparente, solo texto */
+    color: #333;
+    font-size: 0.8em; /* Tamaño de letra más pequeño */
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    box-sizing: border-box;
+}
+
+
+/* Definición del Grid para el Bloque Grande Izquierdo (SECCION5 a SECCION8) */
+#blockLargeLeft {
+    /* 8 columnas de celdas, sin columna para pasillo vertical */
+    grid-template-columns: repeat(8, 110px);
+    /* 4 filas de celdas (80px cada una) + 1 fila para la línea roja (3px) + 1 fila para etiquetas de sección (20px) */
+    grid-template-rows: repeat(2, 80px) 3px repeat(2, 80px) 20px;
+}
+
+/* Posicionamiento de las celdas en el Bloque Grande Izquierdo */
+/* Las celdas ya tienen su grid-column y grid-row correctos. */
+/* Asegúrate que las section-label usen las columnas correctas dentro de las 8. */
+#blockLargeLeft > .section-label[style*="grid-column: 1"] { grid-column: 1; }
+#blockLargeLeft > .section-label[style*="grid-column: 2"] { grid-column: 2; }
+#blockLargeLeft > .section-label[style*="grid-column: 3"] { grid-column: 3; }
+#blockLargeLeft > .section-label[style*="grid-column: 4"] { grid-column: 4; }
+
+
+/* Definición del Grid para el Bloque Grande Derecho (SECCION9 a SECCION16) */
+#blockLargeRight {
+    /* 8 columnas de celdas, sin columna para pasillo vertical */
+    grid-template-columns: repeat(8, 110px);
+    /* Las filas se mantienen igual */
+    grid-template-rows: repeat(2, 80px) 3px repeat(2, 80px) 20px;
+    margin-left: 30px; /* Espacio entre el bloque izquierdo y el derecho */
+}
+
+/* Posicionamiento de las celdas en el Bloque Grande Derecho */
+/* Las celdas ya tienen su grid-column y grid-row correctos. */
+/* Asegúrate que las section-label usen las columnas correctas dentro de las 8. */
+#blockLargeRight > .section-label[style*="grid-column: 1"] { grid-column: 1; }
+#blockLargeRight > .section-label[style*="grid-column: 2"] { grid-column: 2; }
+#blockLargeRight > .section-label[style*="grid-column: 3"] { grid-column: 3; }
+#blockLargeRight > .section-label[style*="grid-column: 4"] { grid-column: 4; }
+
+
+/* Estilos de celda base */
+.grid-cell {
+    background-color: #008000; /* Verde, como en la imagen */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em; /* Más grande para que se vean los números */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border 0.3s ease;
+    border: 1px solid black; /* Borde de celda como en la imagen */
+    box-sizing: border-box; /* Asegura que padding y borde se incluyan en el tamaño de la celda */
+}
+
+/* Colores de estado (mantenerlos para la funcionalidad) */
+.grid-cell.libre {
+    background-color: #008000; /* Verde */
+}
+
+.grid-cell.ocupado {
+    background-color: #800711; /* Rojo */
+    color: #f1e9e9;
+    font-weight: bold;
+    border: 1px solid #550810;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+.grid-cell.ocupado::after {
+    content: attr(data-quantity);
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    font-size: 0.7em;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 1px 3px;
+    border-radius: 3px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Resaltado de celda seleccionada y búsqueda */
+.grid-cell.selected {
+    border: 2px solid #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.grid-cell.found {
+    background-color: #ffc107 !important;
+    color: #333 !important;
+    border: 2px solid #dc3545 !important;
+    animation: pulse-border 1s infinite alternate;
+}
+
+@keyframes pulse-border {
+    from { border-color: #ffc107; }
+    to { border-color: #dc3545; }
+}
+
+/* Estilo para los pasillos verticales */
+.vertical-aisle {
+    background-color: lightgray; /* Gris claro como el fondo principal */
+    border: 1px solid black; /* Borde como en la imagen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9em; /* Ajustado para que el texto sea más grande */
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    writing-mode: vertical-lr; /* Texto vertical */
+    transform: rotate(180deg); /* Voltear para leer de abajo a arriba */
+    cursor: default;
+}
+
+/* Nuevo estilo para los pasillos horizontales en la parte inferior */
+.horizontal-aisle-bottom {
+    background-color: lightgray; /* Gris claro */
+    border: 1px solid black; /* Borde como en la imagen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9em;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    cursor: default;
+}
+
+
+
+/* Estilos para la notificación Toast */
+.toast-notification {
+    visibility: hidden; /* Oculto por defecto */
+    min-width: 250px; /* Ancho mínimo */
+    margin-left: -125px; /* Centrar el toast */
+    background-color: #333; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+    text-align: center; /* Texto centrado */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 16px; /* Espaciado */
+    position: fixed; /* Posición fija */
+    z-index: 1000; /* Siempre encima de otros elementos */
+    left: 50%; /* Centrado horizontal */
+    bottom: 30px; /* 30px desde abajo */
+    font-size: 17px; /* Tamaño de fuente */
+    opacity: 0; /* Inicialmente transparente */
+    transition: opacity 0.5s, visibility 0.5s; /* Transición suave */
+}
+
+.toast-notification.show {
+    visibility: visible; /* Mostrar el toast */
+    opacity: 1; /* Hacerlo visible */
+}
+
+/* Tipos de Toast */
+.toast-notification.success {
+    background-color: #28a745; /* Verde para éxito */
+}
+
+.toast-notification.error {
+    background-color: #dc3545; /* Rojo para error */
+}
+
+.toast-notification.warning {
+    background-color: #ffc107; /* Amarillo para advertencia */
+    color: #333; /* Texto oscuro para advertencia */
+}
+
+.toast-notification.info {
+    background-color: #17a2b8; /* Azul para información */
+}
