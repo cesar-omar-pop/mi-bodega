@@ -1,0 +1,2 @@
+# mi-bodega
+proyecto completo 
