@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Bodega</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/grid.css">
+    <link rel="stylesheet" href="css/modal.css">
+
+<script type="module" src="js/firebase-config.js"></script>
+<script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+<script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+    </head>
+
+
+    
+<body>
+    <header class="top-bar">
+        <div class="logo">MapStock</div>
+        <div class="legend">
+            <span class="legend-circle libre"></span> LIBRE
+            <span class="legend-circle ocupado"></span> OCUPADO
+        </div>
+       <div class="actions">
+    <button id="go-to-map2-button">Ir a Mapa 2</button>
+    <button id="go-to-map3-button">Ir a Mapa 3</button>
+    <button id="logout-button">Cerrar Sesión</button>
+     <button id="go-to-salidas-button">Registrar Salida</button>
+</div>
+
+
+            <input type="text" id="search-product-input" placeholder="Buscar producto..." class="search-input hidden">
+            <button id="toggle-search-button" class="action-button">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.418-3.582-8-8-8s-8 3.582-8 8 3.582 8 8 8zm0-14c3.313 0 6 2.687 6 6s-2.687 6-6 6-6-2.687-6-6 2.687-6 6-6z" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="grid-container"id="warehouse-map1">
+            </div>
+    </div>
+
+    <div id="custom-tooltip" class="custom-tooltip"></div> 
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>Detalle de Posición</h3>
+            <p id="modal-position"></p>
+            <div class="modal-input-group">
+                <label for="product-name-input">Nombre del Producto:</label>
+                <input type="text" id="product-name-input" placeholder="Nombre del producto">
+            </div>
+           <div class="modal-input-group">
+    <label for="product-brand-input">Marca:</label>
+    <input type="text" id="product-brand-input" placeholder="Marca del producto">
+    <div class="brand-options-container">
+        <div class="brand-option-circle" data-brand="Nufarm">Nufarm</div>
+        <div class="brand-option-circle" data-brand="Velsimex">Velsimex</div>
+        <div class="brand-option-circle" data-brand="UPL">UPL</div>
+        <div class="brand-option-circle" data-brand="Sifatec">Sifatec</div>
+        <div class="brand-option-circle" data-brand="Dragon">Dragon</div>
+    </div>
+</div>
+            <div class="modal-input-group">
+                <label for="product-quantity-input">Cantidad:</label>
+                <input type="number" id="product-quantity-input" min="1" value="1">
+            </div>
+            <div class="modal-input-group">
+                <label for="product-date-input">Fecha:</label>
+                <input type="date" id="product-date-input">
+            </div>
+            <div class="modal-input-group">
+                <label for="product-presentation-select">Presentación:</label>
+                <select id="product-presentation-select">
+                    <option value="">Seleccionar</option>
+                    <option value="1L">1L</option>
+                    <option value="5L">5L</option>
+                    <option value="10L">10L</option>
+                    <option value="20L">20L</option>
+                    <option value="1/2">1/2</option>
+                    <option value="1/4">1/4</option>
+                    <option value="25K">25K</option>
+                    <option value="20K">20K</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button id="edit-button" class="save">Editar Datos</button>
+                <button id="delete-button" class="delete">Eliminar Producto</button>
+                <button id="add-button" class="save" style="display: none;">Agregar Producto</button>
+            </div>
+            <div class="modal-actions" id="move-modal-actions" style="display: none;"> <button id="confirm-move-button" class="save">Confirmar Movimiento</button>
+                <button id="cancel-move-button" class="cancel">Cancelar Movimiento</button>
+            </div>
+            
+        </div>
+    </div>
+    <div id="toast-notification" class="toast-notification"></div>
+
+    <script type="module" src="js/script.js"></script> 
+
+<script type="module">
+    import { auth } from './js/firebase-config.js'; // Ajusta la ruta si es necesario
+
+    auth.onAuthStateChanged((user) => {
+        if (!user) {
+            // Si no hay usuario logueado
+            // Y la URL actual NO es ya login.html, redirige a login.html
+            if (!window.location.pathname.includes('login.html')) {
+                window.location.href = 'login.html';
+            }
+        } else {
+            // Si hay un usuario logueado
+            // Y la URL actual ES login.html, redirige a index.html (o la página principal del mapa)
+            if (window.location.pathname.includes('login.html')) {
+                window.location.href = 'index.html'; // O a la primera página del mapa si no es index.html
+            }
+        }
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
