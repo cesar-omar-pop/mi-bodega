@@ -1,0 +1,689 @@
+/* style.css */
+/* style.css */
+
+/* style.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #f0f0f0; /* ESTE ES EL COLOR ORIGINAL DE TU CUERPO, RESTÁURALO */
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* ELIMINA O COMENTA CUALQUIERA DE ESTAS LÍNEAS SI LAS AÑADÍ ANTES EN EL BODY: */
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* overflow-x: hidden; */
+    /* background-image: url(...); */
+    /* background-size: cover; */
+    /* background-position: center; */
+    /* background-repeat: no-repeat; */
+    /* background-attachment: fixed; */
+}
+.top-bar {
+    background-color: #007bff; /* Barra superior azul */
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+    gap: 10px; /* Espacio entre los elementos de la barra superior */
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.legend {
+    display: flex;
+    align-items: center;
+}
+
+.legend-circle {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin-right: 5px;
+    opacity: 0.8;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.legend-circle.libre {
+    background-color: #07661e; /* Verde para libre */
+}
+
+.legend-circle.ocupado {
+    background-color: #dc3545; /* Rojo para ocupado */
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre los elementos de acción */
+}
+
+.action-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.action-button:hover {
+    color: #cceeff; /* Azul claro al pasar el ratón */
+}
+
+.action-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+.search-input {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 0; /* Inicialmente oculto */
+    opacity: 0;
+    transition: width 0.3s ease, opacity 0.3s ease;
+    box-sizing: border-box;
+}
+
+.search-input.hidden {
+    width: 0;
+    opacity: 0;
+    padding: 0;
+    border: none;
+}
+
+.search-input:not(.hidden) {
+    width: 180px; /* Ancho cuando es visible */
+    opacity: 1;
+}
+
+.container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+/* style.css */
+
+#custom-tooltip {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.9); /* Darker, less transparent background */
+    color: #ffffff; /* White text for contrast */
+    padding: 10px 15px; /* More padding */
+    border-radius: 8px; /* Rounded corners */
+    font-size: 0.95em; /* Slightly larger font */
+    font-weight: bold; /* Make text bolder */
+    pointer-events: none; /* Allows clicks to pass through */
+    z-index: 10000; /* Ensure it's always on top */
+    opacity: 0; /* Start hidden */
+    visibility: hidden; /* Start hidden */
+    transition: opacity 0.2s ease, visibility 0.2s ease; /* Smooth fade in/out */
+    line-height: 1.4; /* Better line spacing for readability */
+    white-space: pre-wrap; /* Preserve line breaks from \n */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    text-align: left; /* Align text to the left */
+    max-width: 250px; /* Prevent it from getting too wide */
+}
+/* Estilos de la cuadrícula (copiados de tu grid.css para tenerlos en un solo lugar si prefieres) */
+/* Si ya tienes un grid.css aparte, puedes eliminar esta sección de style.css */
+/* O asegúrate de que no haya duplicados ni conflictos si mantienes ambos */
+.grid-container {
+    display: grid;
+    gap: 1px;
+    background-color: #dcdcdc;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 10px auto;
+    overflow: auto;
+    grid-template-columns: repeat(25, 70px); /* 25 columnas, cada una de 70px de ancho */
+    grid-template-rows: repeat(14, 90px);    /* 14 filas, cada una de 90px de alto */
+}
+
+.grid-cell {
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8em; /* Ajustado para mejor legibilidad */
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid #dcdcdc;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+.grid-cell.libre {
+    background-color: #07661e;
+    color: white;
+    border: 1px solid #0b581d;
+}
+
+.grid-cell.ocupado {
+    background-color: #f8d7da;
+    color: #721c24;
+    font-weight: bold;
+    border: 1px solid #f5c6cb;
+}
+
+.aisle {
+    background-color: #e0e0e0; /* Gris para pasillos */
+    cursor: default;
+    border: 1px solid #c0c0c0;
+}
+
+.office {
+    background-color: #6c757d; /* Gris oscuro para oficina */
+    color: white;
+    font-weight: bold;
+    cursor: default;
+    border: 1px solid #5a6268;
+}
+
+.grid-cell.selected {
+    border: 2px solid #007bff; /* Borde azul para la celda seleccionada */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.grid-cell.found {
+    background-color: #ffc107; /* Amarillo para celdas encontradas en la búsqueda */
+    animation: pulse-border 1s infinite alternate; /* Animación para resaltar */
+}
+
+@keyframes pulse-border {
+    from {
+        border-color: #ffc107;
+        box-shadow: 0 0 5px rgba(255, 193, 7, 0.7);
+    }
+    to {
+        border-color: #ffcd38;
+        box-shadow: 0 0 15px rgba(255, 193, 7, 1);
+    }
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .actions {
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .search-input {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+/* style.css */
+
+/* ... (existing styles) ... */
+
+/* --- Toast Notification Styles --- */
+.toast-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333; /* Dark background */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1em;
+    opacity: 0; /* Initially hidden */
+    visibility: hidden; /* Hidden from screen readers initially */
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    z-index: 1000; /* Ensure it's on top */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    min-width: 200px;
+    text-align: center;
+}
+
+.toast-notification.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Specific colors for success/error if needed, can be added with classes */
+.toast-notification.success {
+    background-color: #28a745; /* Green for success */
+}
+
+.toast-notification.error {
+    background-color: #dc3545; /* Red for error */
+}
+/* Estilos para el modal de selección de mapa más pequeño */
+.modal-content.small-modal {
+    max-width: 350px; /* Un poco más estrecho que el modal principal */
+    padding: 20px; /* Ajustar padding */
+}
+
+.map-selection-options {
+    display: flex;
+    flex-direction: column; /* Botones apilados verticalmente */
+    gap: 10px; /* Espacio entre los botones */
+    margin-top: 15px; /* Espacio arriba de los botones */
+}
+
+/* Ajustar el botón de cierre del modal de selección */
+.close-button-selection {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2em;
+    font-weight: bold;
+    cursor: pointer;
+    color: #888;
+}
+
+.close-button-selection:hover,
+.close-button-selection:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/* --- NEW: Toast Notification Styles (Diseño de Mapa 3) --- */
+.toast-notification {
+    position: fixed;
+    bottom: 20px; /* Aparece desde abajo */
+    left: 50%;
+    transform: translateX(-50%); /* Centrado horizontalmente */
+    background-color: #333; /* Fondo oscuro */
+    color: white; /* Texto blanco */
+    padding: 10px 20px;
+    border-radius: 5px; /* Esquinas redondeadas */
+    font-size: 1em;
+    opacity: 0; /* Inicialmente invisible */
+    visibility: hidden; /* Oculto para lectores de pantalla */
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out; /* Transición suave */
+    z-index: 10000; /* Asegura que esté por encima de casi todo */
+    min-width: 200px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para profundidad */
+}
+
+.toast-notification.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Clases de tipo para diferentes colores de fondo */
+.toast-notification.success {
+    background-color: #28a745; /* Verde para éxito */
+}
+
+.toast-notification.error {
+    background-color: #dc3545; /* Rojo para error */
+}
+
+.toast-notification.info {
+    background-color: #17a2b8; /* Azul claro para información */
+}
+
+/* style.css */
+
+/* --- INICIO: ESTILOS ESPECÍFICOS PARA EL BODY DE LA PÁGINA DE LOGIN --- */
+/* Estas reglas SOLO se aplicarán si el body tiene la clase 'login-page-body' */
+body.login-page-body {
+    background-color: #1a1a2e; /* Un color de fondo oscuro y profundo */
+    /* Puedes probar con otros colores oscuros para la base del login: */
+    /* background-color: #2c3e50; */ /* Gris azulado oscuro */
+    /* background-color: #212121; */ /* Gris muy oscuro */
+
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+/* --- FIN: ESTILOS ESPECÍFICOS PARA EL BODY DE LA PÁGINA DE LOGIN --- */
+
+/* --- INICIO: NUEVOS ESTILOS PARA LA PÁGINA DE LOGIN (AJUSTADOS PARA MEJOR LEGIBILIDAD) --- */
+
+
+.login-full-page-wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute; /* Ocupa toda la pantalla detrás del login box */
+    top: 0;
+    left: 0;
+    z-index: 1; /* Asegura que esté por debajo del login-box */
+}
+
+.login-box {
+    background-color: rgba(255, 255, 255, 0.25); /* Un poco más opaco para mejor contraste */
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7); /* Sombra más grande y oscura para más profundidad */
+    text-align: center;
+    width: 450px; /* Un poco más ancho para mejor distribución */
+    max-width: 90%;
+    color: white; /* Color del texto principal blanco */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Borde blanco un poco más visible */
+    
+    /* EFECTO FROSTED GLASS (CRYSTAL ESMERILADO) */
+    backdrop-filter: blur(12px); /* Aumentamos ligeramente el blur */
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 2; /* Asegura que esté por encima del wrapper */
+    position: relative; /* Para asegurar el z-index */
+}
+
+.login-box h2 {
+    margin-bottom: 35px; /* Más espacio debajo del título */
+    color: white;
+    font-size: 2.8em; /* Título aún más grande */
+    font-weight: 700; /* Negrita más marcada */
+    text-shadow: 0 3px 6px rgba(0,0,0,0.8); /* Sombra de texto más pronunciada */
+}
+
+.input-group-field {
+    margin-bottom: 28px; /* Más espacio entre grupos de inputs */
+    text-align: left;
+}
+
+.input-group-field label {
+    display: block;
+    margin-bottom: 12px; /* Más espacio entre label e input */
+    font-weight: 600; /* Labels más negritas */
+    color: #e0e0e0; /* Color gris claro para los labels (casi blanco) */
+    font-size: 1.15em; /* Labels un poco más grandes */
+}
+
+.input-group-field input {
+    width: 100%;
+    padding: 16px 20px; /* Padding más generoso */
+    border: none; 
+    border-radius: 10px; 
+    background-color: rgba(255, 255, 255, 0.15); /* Fondo del input más opaco */
+    color: white; /* Texto del input blanco */
+    font-size: 1.25em; /* Texto del input más grande */
+    box-sizing: border-box; /* Incluye padding y borde en el ancho total */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none; /* Eliminar el contorno por defecto al enfocar */
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5); /* Borde suave interno más visible */
+}
+
+.input-group-field input::placeholder {
+    color: rgba(255, 255, 255, 0.8); /* Placeholder mucho más visible */
+}
+
+.input-group-field input:focus {
+    background-color: rgba(255, 255, 255, 0.35); /* Fondo aún más opaco al enfocar */
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.9), 0 0 20px rgba(255, 255, 255, 0.4); /* Sombra exterior más fuerte */
+}
+
+.action-button-login, 
+.action-button-register { 
+    background-color: #4CAF50; /* Un verde más brillante */
+    color: white;
+    padding: 18px 25px; /* Más padding para botones */
+    border: none;
+    border-radius: 10px; 
+    cursor: pointer;
+    font-size: 1.3em; /* Texto más grande en botones */
+    font-weight: bold;
+    letter-spacing: 0.5px; /* Espaciado entre letras */
+    margin-top: 25px; /* Más espacio */
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 18px rgba(76, 175, 80, 0.5); /* Sombra del botón */
+}
+
+.action-button-register {
+    background-color: #2196F3; /* Un azul para registrarse */
+    margin-top: 18px; /* Más espacio entre botones */
+    box-shadow: 0 6px 18px rgba(33, 150, 243, 0.5); 
+}
+
+.action-button-login:hover {
+    background-color: #388E3C; /* Verde más oscuro al hover */
+    transform: translateY(-4px); /* Efecto 3D al pasar el mouse más pronunciado */
+    box-shadow: 0 10px 25px rgba(76, 175, 80, 0.7);
+}
+
+.action-button-register:hover {
+    background-color: #1976D2; /* Azul más oscuro al hover */
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(33, 150, 243, 0.7);
+}
+
+.forgot-password-link {
+    display: block;
+    margin-top: 30px; /* Más espacio */
+    color: #ADD8E6; /* Color azul claro para el enlace (LightBlue) para mayor visibilidad */
+    text-decoration: none;
+    font-size: 1.05em; 
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.forgot-password-link:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* --- Estilos para los Modales (Olvidé Contraseña y Registro) --- */
+/* --- Estilos para los Modales (Olvidé Contraseña y Registro) --- */
+.modal-login { 
+    display: none; /* <--- ¡ESTA ES LA LÍNEA CRÍTICA! Debe ser 'none' */
+    position: fixed;
+    z-index: 1000; /* Asegura que esté por encima de todo lo demás */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Permite scroll si el contenido del modal es muy grande */
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque al fondo */
+    -webkit-backdrop-filter: blur(5px);
+    
+    /* MANTENER estas propiedades, pero se aplicarán SOLO CUANDO JS cambie display a 'flex' */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-login-content { 
+    background-color: #ffffff; /* Fondo blanco opaco para el contenido del modal */
+    padding: 35px; 
+    border-radius: 12px; 
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5); /* Sombra más fuerte */
+    width: 85%;
+    max-width: 550px; /* Ancho máximo para el modal */
+    position: relative; /* Para posicionar el botón de cerrar */
+    text-align: center; 
+    color: #333; /* Color de texto oscuro para el contenido del modal */
+}
+
+.close-button-modal {
+    color: #555; /* Color más oscuro para el botón de cerrar */
+    position: absolute; /* Posicionamiento absoluto dentro del modal-login-content */
+    top: 15px; 
+    right: 25px; 
+    font-size: 32px; /* Más grande */
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-button-modal:hover,
+.close-button-modal:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+/* Estilos para los títulos y párrafos dentro de los modales */
+.modal-login-content h3 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 2em; 
+    font-weight: 600;
+}
+
+.modal-login-content p {
+    text-align: center;
+    margin-bottom: 30px; 
+    color: #666;
+    font-size: 1.05em;
+}
+
+/* Ajustes para inputs y labels dentro de los modales (sobreescriben los de .login-box) */
+.modal-login-content .input-group-field {
+    margin-bottom: 25px; 
+}
+
+.modal-login-content .input-group-field label {
+    color: #333; /* Labels en el modal para el fondo blanco */
+    margin-bottom: 10px;
+}
+
+.modal-login-content .input-group-field input {
+    background-color: #f0f0f0; /* Fondo más claro para los inputs del modal */
+    border: 1px solid #ddd;
+    color: #333; /* Texto del input del modal en negro/gris oscuro */
+    padding: 14px 18px; 
+    font-size: 1.15em;
+}
+
+.modal-login-content .input-group-field input::placeholder {
+    color: #888;
+}
+
+.modal-login-content .input-group-field input:focus {
+    background-color: #e8e8e8;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.4); /* Sombra azul para el focus */
+}
+
+/* El botón de enviar en el modal de restablecimiento reutiliza .action-button-login pero se ajusta */
+#forgot-password-modal .action-button-login {
+    background-color: #007bff; /* Un azul estándar para este botón en el modal */
+    margin-top: 20px;
+    box-shadow: none; /* Eliminar sombra extra */
+    transform: none; /* Eliminar efecto de hover del login */
+    padding: 16px 25px; 
+    font-size: 1.25em; 
+}
+
+#forgot-password-modal .action-button-login:hover {
+    background-color: #0056b3;
+    transform: none; 
+    box-shadow: none;
+}
+
+/* El botón de confirmar registro en el modal de registro reutiliza .action-button-register pero se ajusta */
+#register-modal .action-button-register {
+    background-color: #28a745; /* Un verde estándar para el botón de registro del modal */
+    margin-top: 20px;
+    box-shadow: none;
+    transform: none;
+    padding: 16px 25px;
+    font-size: 1.25em;
+}
+
+#register-modal .action-button-register:hover {
+    background-color: #218838;
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* --- Estilos para la notificación flotante --- */
+#notification-area {
+    position: fixed;
+    bottom: 20px; 
+    left: 50%;
+    transform: translateX(-50%); 
+    width: 90%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; 
+    z-index: 10000; /* Asegura que esté por encima de todos los elementos, incluyendo modales */
+}
+
+.notification-message {
+    background-color: #333; 
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px; 
+    font-size: 0.95em;
+    opacity: 0;
+    visibility: hidden; /* Oculto por defecto */
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out, visibility 0.4s;
+    transform: translateY(20px); /* Empieza un poco abajo para animar la entrada */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    min-width: 250px;
+    text-align: center;
+}
+
+.notification-message.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); /* Sube a su posición final */
+}
+
+/* Colores específicos para cada tipo de mensaje */
+.notification-success { background-color: #28a745; }
+.notification-error { background-color: #dc3545; }
+.notification-info { background-color: #17a2b8; }
+.notification-warning { background-color: #ffc107; color: #343a40; } /* Texto oscuro para contraste */
+/* --- NUEVOS ESTILOS PARA ESTADOS DE CADUCIDAD --- */
+.duration-1-year {
+    background-color: #ff8c00; /* Naranja */
+    border: 2px solid #e77e00;
+}
+.duration-2-years {
+    background-color: #ffc107; /* Amarillo */
+    border: 2px solid #e3b000;
+}
+.duration-3-years {
+    background-color: #28a745; /* Verde */
+    border: 2px solid #218838;
+}
+
+/* Estos estilos son para los productos en la lista del modal */
+.product-expiration-status.duration-1-year-text {
+    color: white;
+    background-color: #ff8c00;
+    font-weight: bold;
+}
+.product-expiration-status.duration-2-years-text {
+    color: #333;
+    background-color: #ffc107;
+    font-weight: bold;
+}
+.product-expiration-status.duration-3-years-text {
+    color: white;
+    background-color: #28a745;
+    font-weight: bold;
+}
+.product-expiration-status.expired-text { /* Reutilizamos esta clase si el producto está expirado */
+    color: white;
+    background-color: #dc3545; /* Rojo para expirados */
+    font-weight: bold;
+}
