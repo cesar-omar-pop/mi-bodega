@@ -1,0 +1,503 @@
+/* grid.css - Estilos específicos de la cuadrícula */
+.grid-container {
+    display: grid;
+    gap: 1px; /* Espacio muy pequeño entre celdas para los bordes */
+    background-color: #dcdcdc; /* Color de las líneas de la cuadrícula */
+    padding: 10px;
+    border-radius: 8px;
+    /* REMOVED/ADJUSTED: width, max-width, height, max-height from previous versions that limited grid size */
+    /* Instead, let the grid size be defined by its cells and rely on overflow */
+    margin: 10px auto; /* Centrar la cuadrícula */
+    overflow: auto; /* Permitir el scroll si la cuadrícula es muy grande */
+
+    /* MODIFICATION: 25 columns, each 60px wide (adjust 60px as needed) */
+    grid-template-columns: repeat(25, 70px); /* 25 columnas, cada una de 60px de ancho */
+    grid-template-rows: repeat(14, 90px);    /* 14 filas, cada una de 60px de alto */
+    /* I've also set rows to 60px for consistent square-ish cells. Adjust if you prefer different height. */
+}
+.grid-cell {
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid #dcdcdc;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;       /* Fuerza una sola línea */
+    transition: background-color 0.3s ease, border 0.3s ease;
+    position: relative;
+    height: 57px;              /* Fija la altura según el diseño */
+    max-height: 90px;
+    line-height: 1em;
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+
+.grid-cell.libre {
+    background-color: #07661e; /* Verde claro para libre */
+    color: white; /* Changed to white for better contrast with dark green */
+    border: 1px solid #0b581d; /* Borde verde claro para libre */
+}
+
+/* MODIFICACIÓN CLAVE PARA MOSTRAR "LIBRE" */
+.grid-cell.libre::before {
+    content: "LIBRE"; /* Inserta el texto "LIBRE" */
+    position: absolute; /* Posiciona el texto sobre la celda */
+    top: 50%; /* Centra verticalmente */
+    left: 50%; /* Centra horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta el centrado exacto */
+    font-weight: bold; /* Hace el texto más notorio */
+    font-size: 1em; /* Ajusta el tamaño de fuente si es necesario */
+    color: inherit; /* Hereda el color de texto de .grid-cell.libre (blanco) */
+    pointer-events: none; /* Asegura que el pseudo-elemento no capture los clics */
+    z-index: 1; /* Asegura que esté por encima del fondo, pero debajo de cualquier contenido futuro */
+}
+
+.grid-cell.ocupado {
+    background-color: #800711; /* Rojo claro para ocupado */
+    color: #f1e9e9;
+    font-weight: bold;
+    border: 1px solid #550810; /* Borde rojo claro para ocupado */
+}
+
+.aisle {
+    background-color: #e0e0e0; /* Gris para pasillos */
+    cursor: default;
+    border: 1px solid #c0c0c0;
+}
+
+.office {
+    background-color: #6c757d; /* Gris oscuro para oficina */
+    color: white;
+    font-weight: bold;
+    cursor: default;
+    border: 1px solid #5a6268;
+}
+
+.grid-cell.selected {
+    border: 2px solid #007bff; /* Borde azul para la celda seleccionada */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.grid-cell.found {
+    background-color: #ffc107; /* Amarillo para celdas encontradas en la búsqueda */
+    animation: pulse-border 1s infinite alternate; /* Animación para resaltar */
+}
+
+@keyframes pulse-border {
+    from {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+    }
+    to {
+        border-color: #e0a800;
+        box-shadow: 0 0 0 5px rgba(255, 193, 7, 0);
+    }
+    
+}
+/* style.css or grid.css */
+/* style.css or grid.css */
+
+.grid-cell.moving-source {
+    border: 3px dashed #ffc107; /* Orange dashed border for source cell during move */
+    box-shadow: 0 0 8px rgba(255, 193, 7, 0.7);
+    background-color: rgba(255, 193, 7, 0.2); /* Slightly transparent yellow background */
+}
+
+/* Optional: Add a style for the target cell if you want to highlight potential drop locations */
+.grid-cell.moving-target {
+    border: 3px dashed #28a745; /* Green dashed border for potential target cell */
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.7);
+}
+
+.modal-actions button.move {
+    background-color: #17a2b8; /* Info blue for move button */
+    color: white;
+}
+
+.modal-actions button.move:hover {
+    background-color: #138496;
+}
+
+.modal-actions button.cancel {
+    background-color: #6c757d; /* Secondary gray for cancel button */
+    color: white;
+}
+
+.modal-actions button.cancel:hover {
+    background-color: #5a6268;
+}
+
+/* Nuevos estilos para los mensajes (toast/snackbar) */
+.notification-message {
+    position: fixed;
+    bottom: 20px; /* Distancia desde abajo */
+    left: 50%;
+    transform: translateX(-50%); /* Centrado horizontal */
+    padding: 15px 25px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    opacity: 0; /* Inicialmente oculto */
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* Transición suave */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex; /* Para centrar el texto verticalmente si hay padding */
+    align-items: center;
+    justify-content: center;
+    min-width: 250px; /* Ancho mínimo para el mensaje */
+    text-align: center;
+}
+
+.notification-message.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0); /* Vuelve a su posición original */
+}
+
+/* Tipos de mensajes */
+.notification-success {
+    background-color: #28a745; /* Verde, como en el ejemplo "Campos limpiados" */
+}
+
+.notification-error {
+    background-color: #dc3545; /* Rojo para errores */
+}
+
+.notification-info {
+    background-color: #257e8b; /* Azul claro para información */
+}
+
+.notification-warning {
+    background-color: #ffc107; /* Amarillo para advertencias */
+    color: #343a40; /* Texto oscuro para contraste */
+}
+
+
+
+/* estilos 2 
+/* Nuevos estilos para los mensajes (toast/snackbar) */
+
+/* Importar fuentes (ej. Poppins, si no está ya) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* --- General Body & Typography --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7f6; /* Fondo gris muy claro y suave */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: #333; /* Color de texto principal */
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: #2c3e50; /* Azul oscuro para títulos */
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* --- Top Bar / Header --- */
+.top-bar {
+    background-color: #2c3e50; /* Azul oscuro profesional */
+    color: #ffffff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra más pronunciada */
+    width: 100%;
+    box-sizing: border-box;
+    position: sticky; /* Sticky header */
+    top: 0;
+    z-index: 999; /* Asegura que esté por encima de otros elementos */
+}
+
+.top-bar .logo {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #ecf0f1; /* Gris claro para el logo */
+}
+
+.top-bar .legend {
+    display: flex;
+    gap: 25px; /* Más espacio entre elementos de leyenda */
+    font-size: 14px;
+    align-items: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre círculo y texto */
+    font-weight: 500;
+}
+
+.legend-circle {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil en blanco */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15); /* Sombra para el círculo */
+}
+
+.legend-circle.libre {
+    background-color: #2ecc71; /* Verde brillante */
+}
+
+.legend-circle.ocupado {
+    background-color: #e74c3c; /* Rojo vibrante */
+}
+
+/* Si tienes más estados como pasillo u oficina, dales color */
+.legend-circle.aisle {
+    background-color: #95a5a6; /* Gris para pasillo */
+}
+.legend-circle.office {
+    background-color: #3498db; /* Azul para oficina */
+}
+
+
+/* --- Top Bar Actions (Buttons) --- */
+.top-bar .actions {
+    display: flex;
+    gap: 15px; /* Espacio entre los botones de acción */
+}
+
+.top-bar .actions button {
+    background-color: #3498db; /* Azul primario para la mayoría de los botones */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px; /* Bordes ligeramente más redondeados */
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.top-bar .actions button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px); /* Efecto de "levantamiento" */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.top-bar .actions button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Botón de cerrar sesión (rojo) */
+#logout-button {
+    background-color: #e74c3c;
+}
+#logout-button:hover {
+    background-color: #c0392b;
+}
+
+/* Botón de lupa (search-icon) */
+#search-icon {
+    background-color: #6c757d; /* Gris para la lupa */
+    padding: 10px; /* Ajustar padding para que se vea más cuadrado o circular si lo deseas */
+    border-radius: 6px; /* Para que coincida con otros botones */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#search-icon:hover {
+    background-color: #5a6268;
+}
+
+/* Estilo para el SVG dentro del botón de lupa */
+#search-icon svg {
+    width: 20px; /* Tamaño del icono SVG */
+    height: 20px;
+    fill: white; /* Color del icono */
+}
+
+
+/* --- Main Content Layout --- */
+.container {
+    display: flex;
+    flex-direction: column; /* Apila los elementos verticalmente */
+    align-items: center; /* Centra horizontalmente el contenido */
+    padding: 30px;
+    flex-grow: 1;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* --- Search Controls --- */
+.search-controls {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px; /* Espacio debajo de la barra superior */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    width: fit-content; /* Se ajusta al contenido */
+    max-width: 800px; /* Limita el ancho en pantallas grandes */
+    box-sizing: border-box;
+}
+
+.search-controls input[type="text"] {
+    flex-grow: 1; /* Permite que el input ocupe el espacio disponible */
+    padding: 12px 15px;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-controls input[type="text"]:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); /* Sombra de enfoque */
+    outline: none;
+}
+
+.search-controls button {
+    background-color: #28a745; /* Verde para buscar */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-controls button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#clear-search-button {
+    background-color: #ffc107; /* Amarillo para limpiar */
+    color: #333; /* Texto oscuro en botón amarillo */
+}
+#clear-search-button:hover {
+    background-color: #e0a800;
+}
+
+
+/* --- Grid Container (warehouse-map1) --- */
+.grid-container {
+    display: grid;
+    /* grid.css debería definir grid-template-columns y rows */
+    gap: 8px; /* Espacio entre celdas */
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Sombra más profunda para el grid */
+    margin-top: 30px; /* Espacio debajo de la búsqueda */
+    max-width: fit-content;
+}
+
+/* --- Grid Cells (warehouse-cell) --- */
+.warehouse-cell {
+    width: 65px; /* Un poco más grande para mejor tacto */
+    height: 65px;
+    display: flex;
+    flex-direction: column; /* Para apilar contenido */
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px; /* Bordes redondeados para las celdas */
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    position: relative; /* Para el tooltip */
+    overflow: hidden; /* Para asegurar que el contenido no se desborde */
+}
+
+.warehouse-cell.libre {
+    background-color: #e6ffee; /* Verde muy claro */
+    border-color: #a3e6b7; /* Borde verde suave */
+}
+
+.warehouse-cell.ocupado {
+    background-color: #ffebeb; /* Rojo muy claro */
+    border-color: #f7baba; /* Borde rojo suave */
+}
+
+.warehouse-cell.selected {
+    border: 3px solid #3498db; /* Borde azul más fuerte para seleccionado */
+    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.3); /* Anillo azul */
+    transform: scale(1.02); /* Ligero zoom */
+}
+
+.warehouse-cell:hover {
+    transform: translateY(-3px); /* Levanta un poco más al pasar el ratón */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Sombra más prominente al hover */
+    border-color: #c7c7c7; /* Borde ligeramente más oscuro */
+}
+
+/* --- Custom Tooltip --- */
+.custom-tooltip {
+    position: absolute;
+    background-color: rgba(44, 62, 80, 0.95); /* Azul oscuro semitransparente */
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    pointer-events: none; /* Permite que el ratón pase a través */
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+    white-space: nowrap; /* Mantiene el texto en una línea */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(10px); /* Empieza un poco más abajo */
+}
+
+.custom-tooltip.active {
+    opacity: 1;
+    transform: translateY(0); /* Sube a su posición final */
+}
+
+/* --- Toast Notification (Optional, for success/error messages) --- */
+.toast-notification {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(52, 152, 219, 0.9); /* Azul por defecto */
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    z-index: 10000;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast-notification.success {
+    background-color: rgba(46, 204, 113, 0.9); /* Verde para éxito */
+}
+
+.toast-notification.error {
+    background-color: rgba(231, 76, 60, 0.9); /* Rojo para error */
+}
