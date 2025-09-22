@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso Administrador</title>
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="login-wrapper">
+    <div class="login-card">
+      <h2>🔑 Acceso Administrador</h2>
+      <p class="subtitle">Ingresa tus credenciales</p>
+
+      <form id="adminLoginForm">
+        <div class="input-group">
+          <label for="adminEmail">Correo</label>
+          <input type="email" id="adminEmail" placeholder="admin@empresa.com" required>
+        </div>
+
+        <div class="input-group">
+          <label for="adminPassword">Contraseña</label>
+          <input type="password" id="adminPassword" placeholder="********" required>
+        </div>
+
+        <button type="submit" class="btn-login">Ingresar</button>
+      </form>
+
+      <p id="loginMessage" class="error"></p>
+    </div>
+  </div>
+
+  <script type="module" src="js/admin-login.js"></script>
+</body>
+</html>

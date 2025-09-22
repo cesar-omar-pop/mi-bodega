@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard</title>
+
+<link rel="stylesheet" href="css/admin.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- jsPDF y html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<!-- SheetJS -->
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
+<!-- QRCode.js -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+
+<style>
+body { font-family: 'Inter', sans-serif; background: #f0f4f8; margin:0; padding:20px; color:#1a1a1a; }
+header { display:flex; justify-content:space-between; align-items:center; background:#1f3c88; color:#fff; padding:15px 25px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.15);}
+header h1 { margin:0; font-size:1.8rem; }
+.btn-logout { background:#e63946; color:#fff; border:none; padding:8px 18px; font-weight:500; border-radius:8px; cursor:pointer; transition:0.2s; }
+.btn-logout:hover { background:#c52834; transform:translateY(-2px); }
+
+/* Pestañas */
+.dashboard-tabs { display:flex; gap:10px; margin:20px 0; }
+.tab-button { padding:8px 16px; border:none; border-radius:6px; cursor:pointer; background:#ccc; font-weight:500; }
+.tab-button.active { background:#1f3c88; color:#fff; }
+
+/* Tablas */
+table { width:100%; border-collapse:collapse; margin-top:10px; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+th, td { padding:12px 15px; text-align:center; font-size:0.95rem; border:1px solid #ccc;}
+thead { background:#1f3c88; color:#fff; }
+tbody tr:nth-child(even) { background:#f7f9fc; }
+tbody tr:hover { background:#e6f0ff; }
+
+/* Filtros */
+.filters-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: #e9ecef;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.filters-container label {
+    font-weight: 500;
+    color: #343a40;
+}
+.filter-select, .filter-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+.btn-filter {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #1f3c88;
+    color: #fff;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+.btn-filter:hover {
+    background: #172c65;
+}
+
+/* Botones */
+.buttons { display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+.btn-login { background:#009688; color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight:500; }
+.btn-login:hover { background:#0a2497; }
+.btn-print { background:#607d8b; color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight:500; }
+.btn-print:hover { background:#455a64; }
+
+/* QR */
+.qr-cell canvas { display:block; margin:auto; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Panel de Administración</h1>
+  <button id="logoutBtn" class="btn-logout">Salir</button>
+</header>
+
+<!-- Pestañas -->
+<div class="dashboard-tabs">
+  <button id="tabMovimientos" class="tab-button active">Movimientos</button>
+  <button id="tabInventario" class="tab-button">Inventario / Productos</button>
+</div>
+
+<!-- FILTROS: solo Movimientos -->
+<div id="filtersMovimientos" class="filters-container">
+  <label for="filter-user">Usuario:</label>
+  <select id="filter-user" class="filter-select">
+    <option value="">Todos</option>
+  </select>
+
+  <label for="filter-map">Mapa:</label>
+  <select id="filter-map" class="filter-select">
+    <option value="">Todos</option>
+    <option value="mapa1">Mapa 1</option>
+    <option value="mapa2">Mapa 2</option>
+    <option value="mapa3">Mapa 3</option>
+  </select>
+
+  <label for="filter-start-date">Fecha desde:</label>
+  <input type="date" id="filter-start-date" class="filter-input">
+
+  <label for="filter-end-date">Fecha hasta:</label>
+  <input type="date" id="filter-end-date" class="filter-input">
+
+  <button id="apply-filters" class="btn-filter">Aplicar Filtros</button>
+</div>
+
+<!-- CONTENEDOR MOVIMIENTOS -->
+<div id="containerMovimientos">
+  <div class="buttons">
+    <button id="exportMovPdf" class="btn-login">Exportar PDF</button>
+    <button id="printMov" class="btn-print">Imprimir</button>
+    <button id="exportMovExcel" class="btn-login">Exportar Excel</button>
+    <button id="btn-download-all-pdf" class="btn-login">Descargar todas las etiquetas en PDF</button>
+  </div>
+
+  <table class="movements-table" id="movements-table">
+    <thead>
+      <tr>
+        <th>Fecha / Hora</th>
+        <th>Usuario</th>
+        <th>Acción</th>
+        <th>Mapa</th>
+        <th>Posición</th>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Detalles</th>
+        <th>Eliminar</th>
+      </tr>
+    </thead>
+    <tbody id="movements-table-body">
+      <tr><td colspan="9">Cargando...</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Gráficas -->
+  <div style="display:flex; gap:20px; margin-top:20px; flex-wrap:wrap;">
+    <canvas id="chartAcciones" width="300" height="300"></canvas>
+    <canvas id="chartProductos" width="300" height="300"></canvas>
+  </div>
+</div>
+<!-- CONTENEDOR INVENTARIO -->
+<div id="containerInventario" style="display:none;">
+
+  <!-- FILTROS INVENTARIO -->
+  <div class="filters-inventory" style="display:flex; gap:15px; flex-wrap:wrap; align-items:center; margin-bottom:15px; padding:10px; background:#e9ecef; border-radius:8px;">
+    <label for="filterProduct" style="font-weight:500; color:#343a40;">Nombre o Lote:</label>
+    <input type="text" id="filterProduct" class="filter-input" placeholder="Buscar producto o lote" style="padding:8px; border-radius:6px; border:1px solid #ccc;">
+
+    <label for="filterExpiration" style="font-weight:500; color:#343a40;">Caducidad hasta:</label>
+    <input type="date" id="filterExpiration" class="filter-input" style="padding:8px; border-radius:6px; border:1px solid #ccc;">
+
+    <button id="applyInventoryFilters" class="btn-filter" style="padding:8px 16px; border:none; border-radius:6px; background:#1f3c88; color:#fff; font-weight:500; cursor:pointer;">Aplicar Filtros</button>
+  </div>
+
+  <!-- BOTONES -->
+  <div class="buttons">
+    <button id="exportInvPdf" class="btn-login">Exportar PDF</button>
+    <button id="printInv" class="btn-print">Imprimir</button>
+    <button id="exportInvExcel" class="btn-login">Exportar Excel</button>
+  </div>
+
+  <!-- TABLA INVENTARIO -->
+  <table class="inventory-table" id="inventory-table">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Lote</th>
+        <th>Caducidad</th>
+        <th>Cantidad Total</th>
+        <th>Ubicaciones</th>
+        <th>QR</th>
+      </tr>
+    </thead>
+    <tbody id="inventory-table-body">
+      <tr><td colspan="6">Cargando...</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+<script type="module" src="./js/admin-dashboard.js"></script>
+
+<script>
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  window.location.href = "index.html";
+});
+
+// Mostrar/ocultar filtros según pestaña
+const tabMov = document.getElementById('tabMovimientos');
+const tabInv = document.getElementById('tabInventario');
+const filtersMov = document.getElementById('filtersMovimientos');
+const containerMov = document.getElementById('containerMovimientos');
+const containerInv = document.getElementById('containerInventario');
+
+tabMov.addEventListener('click', () => {
+  tabMov.classList.add('active');
+  tabInv.classList.remove('active');
+  containerMov.style.display = 'block';
+  containerInv.style.display = 'none';
+  filtersMov.style.display = 'flex';
+});
+
+tabInv.addEventListener('click', () => {
+  tabInv.classList.add('active');
+  tabMov.classList.remove('active');
+  containerInv.style.display = 'block';
+  containerMov.style.display = 'none';
+  filtersMov.style.display = 'none';
+});
+</script>
+
+</body>
+</html>
