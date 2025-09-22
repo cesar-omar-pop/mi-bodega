@@ -1,0 +1,435 @@
+/* Fuente profesional */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f0f4f8;
+  margin: 0;
+  padding: 20px;
+  color: #1a1a1a;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #1f3c88, #3a539b);
+  color: #fff;
+  padding: 15px 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.btn-logout {
+  background: #e63946;
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-logout:hover {
+  background: #c52834;
+  transform: translateY(-2px);
+}
+
+/* Filtros */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.filters select,
+.filters input {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+.filters button {
+  padding: 8px 16px;
+  background: #1f3c88;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.filters button:hover {
+  background: #3a539b;
+  transform: translateY(-1px);
+}
+
+/* Tabla movimientos */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+thead {
+  background: linear-gradient(90deg, #1f3c88, #3a539b);
+  color: #fff;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+tbody tr:nth-child(even) {
+  background: #f7f9fc;
+}
+
+tbody tr:hover {
+  background: #e6f0ff;
+}
+
+/* Productos con colores profesionales */
+td.product {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.product-piro { background-color: #4caf50; }
+.product-lote { background-color: #2196f3; }
+.product-queso { background-color: #f44336; }
+.product-leche { background-color: #00bcd4; }
+.product-yogurt { background-color: #00bcd4; }
+
+
+.btn-login { /* Exportar PDF */
+  background-color: #009688;
+  color: #fff;
+}
+
+.btn-login:hover {
+  background-color: #00796b;
+  transform: translateY(-1px);
+}
+
+.btn-print { /* Imprimir */
+  background-color: #607d8b;
+  color: #fff;
+}
+
+.btn-print:hover {
+  background-color: #455a64;
+  transform: translateY(-1px);
+}
+
+/* Mensaje vacio tabla */
+.movements-table td[colspan="6"] {
+  text-align: center;
+  font-style: italic;
+  color: #888;
+}
+
+
+
+
+
+
+
+
+
+
+/* ===== Admin Login Profesional ===== */
+body.admin-login {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.login-card {
+  background: #ffffff;
+  padding: 50px 40px;
+  border-radius: 16px;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+  width: 380px;
+  max-width: 90%;
+  text-align: center;
+  animation: fadeIn 0.8s ease-in-out;
+  border-top: 6px solid #2a5298;
+}
+
+.login-card h2 {
+  margin-bottom: 10px;
+  font-size: 28px;
+  color: #1e3c72;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.input-group {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 13px;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+  border: 1px solid #2a5298;
+  box-shadow: 0 0 8px rgba(42, 82, 152, 0.4);
+  outline: none;
+}
+
+/* Botón login */
+.btn-login {
+  width: 100%;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+}
+
+.btn-login:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #16325c, #1f3a7a);
+}
+
+/* Mensaje de error */
+.error {
+  color: #e53e3e;
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Footer opcional */
+.login-footer {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #777;
+}
+
+/* Pequeñas animaciones y efectos de transición */
+.input-group input, .btn-login {
+  transition: all 0.25s ease-in-out;
+}
+
+
+
+/* Contenedor de botones */
+.buttons {
+  display: flex;          /* Para que estén en línea */
+  gap: 10px;              /* Separación entre botones */
+  flex-wrap: wrap;        /* Para que no se rompan en pantallas pequeñas */
+  margin-top: 15px;
+}
+
+/* Botones compactos */
+.btn-action {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s, transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 160px;      /* Evita que se estiren demasiado */
+  justify-content: center;
+}
+/* Contenedor de cada pestaña */
+.tab-container {
+  position: relative;
+}
+
+/* Botón eliminar día oculto por defecto */
+.btn-delete-day {
+  background: #f97316; /* Naranja */
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  display: none;
+  transition: background 0.2s;
+}
+
+/* Mostrar al pasar el mouse */
+.tab-container:hover .btn-delete-day {
+  display: inline-block;
+}
+
+.btn-delete-day:hover {
+  background: #c2410c;
+}
+
+/* Contenedor de filtros */
+.filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+    padding: 15px 20px;
+    background: #f5f7fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* Etiquetas */
+.filters-container label {
+    font-weight: 600;
+    color: #1f3c88;
+    min-width: 60px;
+}
+
+/* Inputs y selects */
+.filter-select, .filter-input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.filter-select:focus, .filter-input:focus {
+    border-color: #1f3c88;
+    box-shadow: 0 0 5px rgba(31,60,136,0.3);
+    outline: none;
+}
+
+/* Botón aplicar filtros */
+.btn-filter {
+    padding: 9px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #1f3c88;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+}
+.btn-filter:hover {
+    background: #172c65;
+    transform: translateY(-2px);
+}
+
+/* Responsivo para móviles */
+@media (max-width: 768px) {
+    .filters-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .btn-filter {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+/* Filtros de Inventario */
+#filtersInventario {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+}
+
+#filtersInventario label {
+    font-weight: 500;
+    color: #495057;
+}
+
+#filtersInventario .filter-input {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    min-width: 150px;
+}
+
+#filtersInventario .btn-filter {
+    padding: 8px 18px;
+    background: #1f3c88;
+    color: #fff;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+#filtersInventario .btn-filter:hover {
+    background: #172c65;
+    transform: translateY(-1px);
+}
